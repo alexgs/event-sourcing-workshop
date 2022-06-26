@@ -1,0 +1,33 @@
+services:
+  database:
+    image: postgres:13-alpine
+    container_name: database
+    restart: unless-stopped
+    networks:
+      - app-network
+    ports:
+      - "${DATABASE_PORT}:5432"
+    volumes:
+      - "${DATABASE_HOST_DIRECTORY}:/var/lib/postgresql/data"
+      - ./database/host:/host
+    working_dir: /host
+
+  webapp:
+    image: alexgs99/node:2
+    container_name: webapp
+    restart: unless-stopped
+    volumes:
+      - .:/CHANGE_ME
+    working_dir: /CHANGE_ME/webapp
+    networks:
+      - app-network
+    environment:
+      - DATABASE_URL
+    command: /home/node/.volta/bin/npm run dev
+    depends_on:
+      - database
+
+networks:
+  app-network:
+    driver: bridge
+    name: app-network
