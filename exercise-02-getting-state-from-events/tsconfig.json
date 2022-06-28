@@ -1,0 +1,10 @@
+{
+  "extends": "@tsconfig/node16/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "noImplicitAny": true,
+    // "paths": {},
+    "strict": true,
+    "strictNullChecks": true
+  }
+}

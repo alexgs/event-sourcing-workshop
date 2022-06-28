@@ -1,0 +1,28 @@
+{
+  "name": "exercise-02-getting-state-from-events",
+  "version": "1.0.0",
+  "description": "",
+  "author": {
+    "email": "alex.nebula99@gmail.com",
+    "name": "Alex Gates-Shannon"
+  },
+  "license": "MIT",
+  "scripts": {
+    "test": "mocha --require ts-node/register ./**/*.test.ts"
+  },
+  "dependencies": {
+    "typescript": "^4.7.4"
+  },
+  "devDependencies": {
+    "@tsconfig/node16": "^1.0.3",
+    "@types/chai": "^4.3.1",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^16.11.41",
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0",
+    "ts-node": "^10.8.1"
+  },
+  "volta": {
+    "node": "16.15.1"
+  }
+}
