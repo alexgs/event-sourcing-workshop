@@ -1,31 +1,24 @@
 services:
   database:
-    image: postgres:13-alpine
-    container_name: database
-    restart: unless-stopped
-    networks:
-      - app-network
-    ports:
-      - "${DATABASE_PORT}:5432"
-    volumes:
-      - "${DATABASE_HOST_DIRECTORY}:/var/lib/postgresql/data"
-      - ./database/host:/host
-    working_dir: /host
-
-  webapp:
-    image: alexgs99/node:2
-    container_name: webapp
-    restart: unless-stopped
-    volumes:
-      - .:/CHANGE_ME
-    working_dir: /CHANGE_ME/webapp
-    networks:
-      - app-network
+    image: eventstore/eventstore:21.10.1-buster-slim
     environment:
-      - DATABASE_URL
-    command: /home/node/.volta/bin/npm run dev
-    depends_on:
-      - database
+      - EVENTSTORE_CLUSTER_SIZE=1
+      - EVENTSTORE_RUN_PROJECTIONS=All
+      - EVENTSTORE_START_STANDARD_PROJECTIONS=true
+      - EVENTSTORE_EXT_TCP_PORT=1113
+      - EVENTSTORE_HTTP_PORT=2113
+      - EVENTSTORE_INSECURE=true
+      - EVENTSTORE_ENABLE_EXTERNAL_TCP=true
+      - EVENTSTORE_ENABLE_ATOM_PUB_OVER_HTTP=true
+    ports:
+      - '1113:1113'
+      - '2113:2113'
+    volumes:
+      - "${DATABASE_HOST_DIRECTORY}:/var/lib/eventstore"
+      - ./database/host:/host
+      - ./database/logs:/var/log/eventstore
+    networks:
+      - app-network
 
 networks:
   app-network:

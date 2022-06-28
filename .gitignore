@@ -45,3 +45,6 @@ node_modules/
 # dotenv environment variables file
 .env
 .env.test
+
+# Keep the database logs directory
+!/database/logs/.gitkeep
