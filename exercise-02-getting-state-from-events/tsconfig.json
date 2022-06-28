@@ -6,5 +6,8 @@
     // "paths": {},
     "strict": true,
     "strictNullChecks": true
+  },
+  "ts-node": {
+    "swc": true
   }
 }
