@@ -7,8 +7,9 @@ export const SHOPPING_CART_CONFIRMED = 'event-type.shopping-cart-confirmed' as c
 export const SHOPPING_CART_CREATED = 'event-type.shopping-cart-created' as const;
 export const SHOPPING_CART_FULFILLMENT_STARTED = 'event-type.shopping-cart-fulfillment-stated';
 export const SHOPPING_CART_STATUS = {
-  CLOSED: 'shopping-cart-status.closed',
-  OPEN: 'shopping-cart-status.open',
+  PENDING: 'shopping-cart-status.pending',
+  CONFIRMED: 'shopping-cart-status.confirmed',
+  CANCELED: 'shopping-cart-status.canceled',
 } as const;
 
 // --- TYPE ALIASES ---
@@ -39,20 +40,16 @@ export type CartFulfillmentStarted = BaseEvent<
 export type ProductAddedToCart = BaseEvent<
   typeof PRODUCT_ADDED_TO_CART,
   {
-    productId: ProductId,
-    quantity: number,
+    product: PricedProduct,
     shoppingCartId: CartId,
-    unitPrice: number,
   }
 >;
 
 export type ProductRemovedFromCart = BaseEvent<
   typeof PRODUCT_REMOVED_FROM_CART,
   {
-    productId: ProductId,
-    quantity: number,
+    product: PricedProduct,
     shoppingCartId: CartId,
-    unitPrice: number,
   }
 >;
 
@@ -60,7 +57,7 @@ export type ShoppingCartCanceled = BaseEvent<
   typeof SHOPPING_CART_CANCELED,
   {
     shoppingCartId: CartId,
-    status: typeof SHOPPING_CART_STATUS.CLOSED,
+    status: typeof SHOPPING_CART_STATUS.CANCELED,
     userId: UserId,
   }
 >;
@@ -69,7 +66,7 @@ export type ShoppingCartConfirmed = BaseEvent<
   typeof SHOPPING_CART_CONFIRMED,
   {
     shoppingCartId: CartId,
-    status: typeof SHOPPING_CART_STATUS.CLOSED,
+    status: typeof SHOPPING_CART_STATUS.CONFIRMED,
     userId: UserId,
   }
 >;
@@ -78,11 +75,27 @@ export type ShoppingCartCreatedEvent = BaseEvent<
   typeof SHOPPING_CART_CREATED,
   {
     shoppingCartId: CartId,
-    status: typeof SHOPPING_CART_STATUS.OPEN,
+    status: typeof SHOPPING_CART_STATUS.PENDING,
     userId: UserId,
   }
 >;
 
 // --- PROJECTIONS ---
 
-export type ShoppingCart = {};
+export interface ShoppingCart {
+  id: CartId;
+  items: PricedProduct[];
+  status: typeof SHOPPING_CART_STATUS;
+  userId: UserId;
+  canceledAt: Date | null;
+  confirmedAt: Date | null;
+  createdAt: Date | null;
+}
+
+// --- VALUE OBJECTS ---
+
+export interface PricedProduct {
+  id: ProductId;
+  quantity: number;
+  unitPrice: number;
+}
