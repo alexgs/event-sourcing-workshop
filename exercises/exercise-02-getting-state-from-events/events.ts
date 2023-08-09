@@ -1,61 +1,91 @@
 import {
+  PricedProductItem,
   ProductAddedToCart,
+  ProductItem,
   ProductRemovedFromCart,
   ShoppingCartCanceled,
   ShoppingCartConfirmed,
   ShoppingCartOpened,
 } from './types';
 
-const cartOpened: ShoppingCartOpened = {
+export const redBalls: PricedProductItem = {
+  productId: 'product-7',
+  quantity: 3,
+  unitPrice: 2.99,
+};
+
+export const greenBalls: PricedProductItem = {
+  productId: 'product-1',
+  quantity: 6,
+  unitPrice: 5.95,
+};
+
+export const yellowBall: PricedProductItem = {
+  productId: 'product-5',
+  quantity: 1,
+  unitPrice: 12.99,
+};
+
+export const cartOpened: ShoppingCartOpened = {
   id: 'abc123',
   type: 'shopping-cart-opened',
   data: {
     clientId: 'client-19',
-    openedAt: new Date(),
+    openedAt: new Date('2023-08-06'),
     shoppingCartId: 'cart-7',
   },
 };
 
-const productAdded: ProductAddedToCart = {
+export const redBallsAdded: ProductAddedToCart = {
   id: 'abc124',
   type: 'product-added-to-shopping-cart',
   data: {
-    productItem: {
-      productId: 'product-1',
-      unitPrice: 19,
-      quantity: 2,
-    },
+    productItem: redBalls,
     shoppingCartId: 'cart-7',
   },
 };
 
-const productRemoved: ProductRemovedFromCart = {
+export const greenBallsAdded: ProductAddedToCart = {
+  id: 'abc128',
+  type: 'product-added-to-shopping-cart',
+  data: {
+    productItem: greenBalls,
+    shoppingCartId: 'cart-7',
+  },
+};
+
+export const yellowBallAdded: ProductAddedToCart = {
+  id: 'abc129',
+  type: 'product-added-to-shopping-cart',
+  data: {
+    productItem: yellowBall,
+    shoppingCartId: 'cart-7',
+  },
+};
+
+export const greenBallsRemoved: ProductRemovedFromCart = {
   id: 'abc125',
   type: 'product-removed-from-shopping-cart',
   data: {
-    productItem: {
-      productId: 'product-1',
-      unitPrice: 19,
-      quantity: 2,
-    },
+    productItem: greenBalls,
     shoppingCartId: 'cart-7',
   },
 };
 
-const cartConfirmed: ShoppingCartConfirmed = {
+export const cartConfirmed: ShoppingCartConfirmed = {
   id: 'abc126',
   type: 'shopping-cart-confirmed',
   data: {
-    confirmedAt: new Date(),
+    confirmedAt: new Date('2023-08-07'),
     shoppingCartId: 'cart-7',
   },
 };
 
-const cartCanceled: ShoppingCartCanceled = {
+export const cartCanceled: ShoppingCartCanceled = {
   id: 'abc127',
   type: 'shopping-cart-canceled',
   data: {
-    canceledAt: new Date(),
+    canceledAt: new Date('2023-08-08'),
     shoppingCartId: 'cart-7',
   },
 };
