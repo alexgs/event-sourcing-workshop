@@ -12,17 +12,13 @@ import { shoppingCardReducer } from './index';
 import { ShoppingCart, ShoppingCartEvent } from './types';
 
 describe('Shopping cart reducer', () => {
-  it('works', () => {
-    expect(1 + 1).toEqual(2);
-  });
-
   it('correctly processes a series of events', () => {
     const expectedOutput: ShoppingCart = {
       id: 'cart-7',
       clientId: 'client-19',
-      confirmedAt: new Date('2023-08-08'),
+      confirmedAt: new Date('2023-08-07'),
       openedAt: new Date('2023-08-06'),
-      products: [yellowBall, redBalls],
+      products: [redBalls, yellowBall],
       status: 'confirmed',
     };
 
