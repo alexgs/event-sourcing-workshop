@@ -15,7 +15,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "prettier": "3.0.1",
+    "typescript": "^5.1.6"
+  },
   "volta": {
     "node": "18.17.1",
     "npm": "9.8.1"
