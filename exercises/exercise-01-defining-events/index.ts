@@ -1,13 +1,21 @@
 type ShoppingCartStatus = 'new' | 'open' | 'confirmed' | 'canceled';
 
+export interface ProductItem {
+  productId: string;
+  quantity: number;
+}
+
+export type PricedProductItem = ProductItem & {
+  unitPrice: number;
+};
+
 interface ShoppingCart {
   id: string;
-  products: [
-    {
-      id: string;
-      quantity: number;
-    },
-  ];
+  canceledAt?: Date;
+  clientId: string;
+  confirmedAt?: Date;
+  openedAt: Date;
+  products: PricedProductItem[];
   status: ShoppingCartStatus;
 }
 
@@ -20,6 +28,8 @@ interface GenericEvent {
 interface ShoppingCartOpened extends GenericEvent {
   type: 'shopping-cart-opened';
   data: {
+    clientId: string;
+    openedAt: Date;
     shoppingCartId: string;
   };
 }
@@ -28,6 +38,8 @@ const cartOpened: ShoppingCartOpened = {
   id: 'abc123',
   type: 'shopping-cart-opened',
   data: {
+    clientId: 'client-19',
+    openedAt: new Date(),
     shoppingCartId: 'cart-7',
   },
 };
@@ -35,8 +47,7 @@ const cartOpened: ShoppingCartOpened = {
 interface ProductAddedToCart extends GenericEvent {
   type: 'product-added-to-shopping-cart';
   data: {
-    productId: string;
-    productQuantity: number;
+    productItem: PricedProductItem;
     shoppingCartId: string;
   };
 }
@@ -45,8 +56,11 @@ const productAdded: ProductAddedToCart = {
   id: 'abc124',
   type: 'product-added-to-shopping-cart',
   data: {
-    productId: 'product-1',
-    productQuantity: 1,
+    productItem: {
+      productId: 'product-1',
+      unitPrice: 19,
+      quantity: 2,
+    },
     shoppingCartId: 'cart-7',
   },
 };
@@ -54,8 +68,7 @@ const productAdded: ProductAddedToCart = {
 interface ProductRemovedFromCart extends GenericEvent {
   type: 'product-removed-from-shopping-cart';
   data: {
-    productId: string;
-    productQuantity: number;
+    productItem: PricedProductItem;
     shoppingCartId: string;
   };
 }
@@ -64,8 +77,11 @@ const productRemoved: ProductRemovedFromCart = {
   id: 'abc125',
   type: 'product-removed-from-shopping-cart',
   data: {
-    productId: 'product-1',
-    productQuantity: 1,
+    productItem: {
+      productId: 'product-1',
+      unitPrice: 19,
+      quantity: 2,
+    },
     shoppingCartId: 'cart-7',
   },
 };
@@ -73,6 +89,7 @@ const productRemoved: ProductRemovedFromCart = {
 interface ShoppingCartConfirmed extends GenericEvent {
   type: 'shopping-cart-confirmed';
   data: {
+    confirmedAt: Date;
     shoppingCartId: string;
   };
 }
@@ -81,6 +98,7 @@ const cartConfirmed: ShoppingCartConfirmed = {
   id: 'abc126',
   type: 'shopping-cart-confirmed',
   data: {
+    confirmedAt: new Date(),
     shoppingCartId: 'cart-7',
   },
 };
@@ -88,6 +106,7 @@ const cartConfirmed: ShoppingCartConfirmed = {
 interface ShoppingCartCanceled extends GenericEvent {
   type: 'shopping-cart-canceled';
   data: {
+    canceledAt: Date;
     shoppingCartId: string;
   };
 }
@@ -96,6 +115,14 @@ const cartCanceled: ShoppingCartCanceled = {
   id: 'abc127',
   type: 'shopping-cart-canceled',
   data: {
+    canceledAt: new Date(),
     shoppingCartId: 'cart-7',
   },
 };
+
+export type ShoppingCartEvent =
+  | ShoppingCartOpened
+  | ProductAddedToCart
+  | ProductRemovedFromCart
+  | ShoppingCartCanceled
+  | ShoppingCartConfirmed;
