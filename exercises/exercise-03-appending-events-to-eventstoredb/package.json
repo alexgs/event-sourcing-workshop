@@ -1,5 +1,5 @@
 {
-  "name": "exercise-02-getting-state-from-events",
+  "name": "exercise-03-appending-events-to-eventstoredb",
   "version": "1.0.0",
   "scripts": {
     "test": "jest",
