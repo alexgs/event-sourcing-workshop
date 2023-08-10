@@ -77,7 +77,7 @@ function processProductRemoved(
   throw new Error('Illegal attempt to remove a product from a cart.');
 }
 
-export function shoppingCardReducer(events: ShoppingCartEvent[]): ShoppingCart {
+export function shoppingCartReducer(events: ShoppingCartEvent[]): ShoppingCart {
   let output: ShoppingCart | null = null;
   for (const event of events) {
     switch (event.type) {

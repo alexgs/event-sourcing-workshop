@@ -7,7 +7,7 @@ export interface ProductItem {
 
 export interface PricedProductItem extends ProductItem {
   unitPrice: number;
-};
+}
 
 export interface ShoppingCart {
   id: string;

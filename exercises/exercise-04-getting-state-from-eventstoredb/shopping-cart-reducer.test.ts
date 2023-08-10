@@ -9,7 +9,7 @@ import {
   yellowBall,
   yellowBallAdded,
 } from './events';
-import { shoppingCardReducer } from './shopping-cart-reducer';
+import { shoppingCartReducer } from './shopping-cart-reducer';
 import { ShoppingCart, ShoppingCartEvent } from './types';
 
 describe('Shopping cart reducer', () => {
@@ -31,7 +31,7 @@ describe('Shopping cart reducer', () => {
       greenBallsRemoved,
       cartConfirmed,
     ];
-    const cart = shoppingCardReducer(events);
+    const cart = shoppingCartReducer(events);
 
     expect(cart).toEqual(expectedOutput);
   });
