@@ -19,6 +19,10 @@ describe('Function `appendToStream`', () => {
     eventStore = EventStoreDBClient.connectionString('esdb://localhost:2113?tls=false');
   });
 
+  afterAll(async () => {
+    await eventStore.dispose();
+  })
+
   it('appends events to EventStoreDB', async () => {
     const streamName = `shopping-cart-${SHOPPING_CART_ID}`;
     const events: ShoppingCartEvent[] = [
@@ -31,6 +35,6 @@ describe('Function `appendToStream`', () => {
     ];
     const appendedEventsCount = await appendToStream(eventStore, streamName, events);
 
-    expect(appendedEventsCount).toBe(BigInt(events.length));
+    expect(appendedEventsCount).toEqual(BigInt(events.length));
   });
 });

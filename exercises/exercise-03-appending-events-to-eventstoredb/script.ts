@@ -18,11 +18,11 @@ async function main() {
   const streamName = `shopping-cart-${SHOPPING_CART_ID}`;
   const events: ShoppingCartEvent[] = [
     cartOpened,
-    // redBallsAdded,
-    // greenBallsAdded,
-    // yellowBallAdded,
-    // greenBallsRemoved,
-    // cartConfirmed,
+    redBallsAdded,
+    greenBallsAdded,
+    yellowBallAdded,
+    greenBallsRemoved,
+    cartConfirmed,
   ];
 
   const appendedEventsCount = await appendToStream(
