@@ -1,0 +1,16 @@
+{
+  "name": "exercise-03-appending-events-to-eventstoredb",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "@eventstore/db-client": "^5.0.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^9.0.2",
+    "ts-node": "^10.9.1"
+  }
+}
