@@ -1,3 +1,4 @@
+import { SHOPPING_CART_ID } from './constants';
 import {
   cartConfirmed,
   cartOpened,
@@ -14,7 +15,7 @@ import { ShoppingCart, ShoppingCartEvent } from './types';
 describe('Shopping cart reducer', () => {
   it('correctly processes a series of events', () => {
     const expectedOutput: ShoppingCart = {
-      id: 'cart-7',
+      id: SHOPPING_CART_ID,
       clientId: 'client-19',
       confirmedAt: new Date('2023-08-07'),
       openedAt: new Date('2023-08-06'),

@@ -1,0 +1,1 @@
+export const SHOPPING_CART_ID = '2e96be48-9be9-4208-9394-1aa35904e69a';

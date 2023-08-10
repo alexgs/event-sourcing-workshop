@@ -1,7 +1,7 @@
+import { SHOPPING_CART_ID } from './constants';
 import {
   PricedProductItem,
   ProductAddedToCart,
-  ProductItem,
   ProductRemovedFromCart,
   ShoppingCartCanceled,
   ShoppingCartConfirmed,
@@ -32,7 +32,7 @@ export const cartOpened: ShoppingCartOpened = {
   data: {
     clientId: 'client-19',
     openedAt: new Date('2023-08-06'),
-    shoppingCartId: 'cart-7',
+    shoppingCartId: SHOPPING_CART_ID,
   },
 };
 
@@ -41,7 +41,7 @@ export const redBallsAdded: ProductAddedToCart = {
   type: 'product-added-to-shopping-cart',
   data: {
     productItem: redBalls,
-    shoppingCartId: 'cart-7',
+    shoppingCartId: SHOPPING_CART_ID,
   },
 };
 
@@ -50,7 +50,7 @@ export const greenBallsAdded: ProductAddedToCart = {
   type: 'product-added-to-shopping-cart',
   data: {
     productItem: greenBalls,
-    shoppingCartId: 'cart-7',
+    shoppingCartId: SHOPPING_CART_ID,
   },
 };
 
@@ -59,7 +59,7 @@ export const yellowBallAdded: ProductAddedToCart = {
   type: 'product-added-to-shopping-cart',
   data: {
     productItem: yellowBall,
-    shoppingCartId: 'cart-7',
+    shoppingCartId: SHOPPING_CART_ID,
   },
 };
 
@@ -68,7 +68,7 @@ export const greenBallsRemoved: ProductRemovedFromCart = {
   type: 'product-removed-from-shopping-cart',
   data: {
     productItem: greenBalls,
-    shoppingCartId: 'cart-7',
+    shoppingCartId: SHOPPING_CART_ID,
   },
 };
 
@@ -77,7 +77,7 @@ export const cartConfirmed: ShoppingCartConfirmed = {
   type: 'shopping-cart-confirmed',
   data: {
     confirmedAt: new Date('2023-08-07'),
-    shoppingCartId: 'cart-7',
+    shoppingCartId: SHOPPING_CART_ID,
   },
 };
 
@@ -86,6 +86,6 @@ export const cartCanceled: ShoppingCartCanceled = {
   type: 'shopping-cart-canceled',
   data: {
     canceledAt: new Date('2023-08-08'),
-    shoppingCartId: 'cart-7',
+    shoppingCartId: SHOPPING_CART_ID,
   },
 };

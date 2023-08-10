@@ -4,5 +4,8 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "@eventstore/db-client": "^5.0.1"
   }
 }
