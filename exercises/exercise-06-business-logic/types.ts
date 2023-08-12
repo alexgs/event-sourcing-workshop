@@ -80,7 +80,7 @@ export type ShoppingCartEvent =
 export interface AddProductToCart {
   type: 'command.add-product-to-shopping-cart';
   data: {
-    productItem: PricedProductItem;
+    productItem: ProductItem;
     shoppingCartId: string;
   };
 }

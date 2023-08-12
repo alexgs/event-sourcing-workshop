@@ -159,5 +159,40 @@ describe('Function `processCommand`', () => {
     expect(output).toMatchObject(expectedEvent);
   });
 
-  // TODO Add tests for rejecting commands
+  it('calculates the price from the price list', () => {
+    const now = new Date();
+    const cart: ShoppingCart = {
+      id: SHOPPING_CART_ID,
+      clientId: CLIENT_ID,
+      openedAt: now,
+      products: [],
+      status: 'open',
+    };
+
+    const output = processCommand(cart, {
+      type: 'command.add-product-to-shopping-cart',
+      data: {
+        productItem: {
+          productId: RED_BALLS.productId,
+          quantity: RED_BALLS.quantity,
+        },
+        shoppingCartId: SHOPPING_CART_ID,
+      },
+    });
+
+    const expectedEvent: Partial<ProductAddedToCart> = {
+      type: 'product-added-to-shopping-cart',
+      data: {
+        productItem: RED_BALLS,
+        shoppingCartId: SHOPPING_CART_ID,
+      },
+    };
+    expect(output).toMatchObject(expectedEvent);
+  });
+
+  it.todo('throws an error when adding a product to a cart that isn\'t opened');
+  it.todo('throws an error when canceling a cart that isn\'t opened');
+  it.todo('throws an error when confirming a cart that isn\'t opened');
+  it.todo('throws an error when confirming an empty cart');
+  it.todo('throws an error when removing a product not in the cart');
 });

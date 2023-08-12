@@ -1,10 +1,13 @@
 import { v4 as uuid } from 'uuid';
+import { GREEN_BALLS, RED_BALLS, YELLOW_BALL } from './constants';
 import {
   AddProductToCart,
   CancelShoppingCart,
   ConfirmShoppingCart,
   OpenShoppingCart,
+  PricedProductItem,
   ProductAddedToCart,
+  ProductItem,
   ProductRemovedFromCart,
   RemoveProductFromCart,
   ShoppingCart,
@@ -15,6 +18,12 @@ import {
   ShoppingCartOpened,
 } from './types';
 
+function getUnitPrice(product: ProductItem): number {
+  const productList = [RED_BALLS, GREEN_BALLS, YELLOW_BALL];
+  const item = productList.find((item) => item.productId === product.productId);
+  return item.unitPrice;
+}
+
 function processAddProductToShoppingCart(
   cart: ShoppingCart,
   command: AddProductToCart,
@@ -23,12 +32,17 @@ function processAddProductToShoppingCart(
     throw new Error('Cart must be opened before adding product(s).');
   }
 
+  const pricedItem: PricedProductItem = {
+    ...command.data.productItem,
+    unitPrice: getUnitPrice(command.data.productItem),
+  };
+
   return {
     id: uuid(),
     type: 'product-added-to-shopping-cart',
     data: {
       shoppingCartId: command.data.shoppingCartId,
-      productItem: command.data.productItem,
+      productItem: pricedItem,
     },
   };
 }
@@ -122,6 +136,9 @@ export function processCommand(
     case 'command.open-shopping-cart':
       return processOpenShoppingCart(cart, command as OpenShoppingCart);
     case 'command.remove-product-from-cart':
-      return processRemoveProductFromCart(cart, command as RemoveProductFromCart);
+      return processRemoveProductFromCart(
+        cart,
+        command as RemoveProductFromCart,
+      );
   }
 }
