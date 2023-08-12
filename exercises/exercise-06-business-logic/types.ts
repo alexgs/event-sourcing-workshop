@@ -19,6 +19,8 @@ export interface ShoppingCart {
   status: ShoppingCartStatus;
 }
 
+// --- EVENTS ---
+
 interface GenericEvent {
   id: string;
   type: string;
@@ -72,3 +74,53 @@ export type ShoppingCartEvent =
   | ProductRemovedFromCart
   | ShoppingCartCanceled
   | ShoppingCartConfirmed;
+
+// --- COMMANDS ---
+
+export interface AddProductToCart {
+  type: 'command.add-product-to-shopping-cart';
+  data: {
+    productItem: PricedProductItem;
+    shoppingCartId: string;
+  };
+}
+
+export interface CancelShoppingCart {
+  type: 'command.cancel-shopping-cart';
+  data: {
+    shoppingCartId: string;
+    timestamp: Date;
+  };
+}
+
+export interface ConfirmShoppingCart {
+  type: 'command.confirm-shopping-cart';
+  data: {
+    shoppingCartId: string;
+    timestamp: Date;
+  };
+}
+
+export interface OpenShoppingCart {
+  type: 'command.open-shopping-cart';
+  data: {
+    clientId: string;
+    shoppingCartId: string;
+    timestamp: Date;
+  };
+}
+
+export interface RemoveProductFromCart {
+  type: 'command.remove-product-from-cart';
+  data: {
+    productItem: PricedProductItem;
+    shoppingCartId: string;
+  };
+}
+
+export type ShoppingCartCommand =
+  | AddProductToCart
+  | CancelShoppingCart
+  | ConfirmShoppingCart
+  | OpenShoppingCart
+  | RemoveProductFromCart;
