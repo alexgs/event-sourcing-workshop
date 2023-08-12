@@ -1,5 +1,6 @@
 import {
   CLIENT_ID,
+  GREEN_BALLS,
   RED_BALLS,
   SHOPPING_CART_ID,
   YELLOW_BALL,
@@ -257,6 +258,48 @@ describe('Function `processCommand`', () => {
     ).toThrowError();
   });
 
-  it.todo('throws an error when confirming an empty cart');
-  it.todo('throws an error when removing a product not in the cart');
+  it('throws an error when confirming an empty cart', () => {
+    const openTime = new Date('2023-08-06');
+    const confirmationTime = new Date('2023-08-08');
+
+    const cart: ShoppingCart = {
+      id: SHOPPING_CART_ID,
+      clientId: CLIENT_ID,
+      openedAt: openTime,
+      products: [],
+      status: 'open',
+    };
+
+    expect(() =>
+      processCommand(cart, {
+        type: 'command.confirm-shopping-cart',
+        data: {
+          timestamp: confirmationTime,
+          shoppingCartId: SHOPPING_CART_ID,
+        },
+      }),
+    ).toThrowError();
+  });
+
+  it('throws an error when removing a product not in the cart', () => {
+    const openTime = new Date('2023-08-06');
+
+    const cart: ShoppingCart = {
+      id: SHOPPING_CART_ID,
+      clientId: CLIENT_ID,
+      openedAt: openTime,
+      products: [RED_BALLS, YELLOW_BALL],
+      status: 'open',
+    };
+
+    expect(() =>
+      processCommand(cart, {
+        type: 'command.remove-product-from-cart',
+        data: {
+          productItem: GREEN_BALLS,
+          shoppingCartId: SHOPPING_CART_ID,
+        },
+      }),
+    ).toThrowError();
+  });
 });
