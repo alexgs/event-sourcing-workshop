@@ -12,7 +12,8 @@ import {
   yellowBallAdded,
 } from './events';
 import { getShoppingCart } from './get-shopping-cart';
-import {ShoppingCart, ShoppingCartEvent} from './types';
+import { getShoppingCartStreamName } from './get-shopping-cart-stream-name';
+import { ShoppingCart, ShoppingCartEvent } from './types';
 
 describe('Function `getShoppingCart`', () => {
   let eventStore: EventStoreDBClient = null;
@@ -28,7 +29,7 @@ describe('Function `getShoppingCart`', () => {
   });
 
   it('correctly retrieves the state of the shopping cart', async () => {
-    const streamName = `shopping-cart-${SHOPPING_CART_ID}`;
+    const streamName = getShoppingCartStreamName(SHOPPING_CART_ID);
     const events: ShoppingCartEvent[] = [
       cartOpened,
       redBallsAdded,
