@@ -1,31 +1,18 @@
 import { v4 as uuid } from 'uuid';
-import { CLIENT_ID, SHOPPING_CART_ID } from './constants';
 import {
-  PricedProductItem,
+  CLIENT_ID,
+  GREEN_BALLS,
+  RED_BALLS,
+  SHOPPING_CART_ID,
+  YELLOW_BALL,
+} from './constants';
+import {
   ProductAddedToCart,
   ProductRemovedFromCart,
   ShoppingCartCanceled,
   ShoppingCartConfirmed,
   ShoppingCartOpened,
 } from './types';
-
-export const redBalls: PricedProductItem = {
-  productId: '0691270e-2cff-44ba-b511-d7da55cd175b',
-  quantity: 3,
-  unitPrice: 2.99,
-};
-
-export const greenBalls: PricedProductItem = {
-  productId: '95830807-2dee-4ff3-b9e4-a39558123f7b',
-  quantity: 6,
-  unitPrice: 5.95,
-};
-
-export const yellowBall: PricedProductItem = {
-  productId: 'fa7bd632-45ca-4e62-8351-cf0a7364e457',
-  quantity: 1,
-  unitPrice: 12.99,
-};
 
 export const cartOpened: ShoppingCartOpened = {
   id: uuid(),
@@ -41,7 +28,7 @@ export const redBallsAdded: ProductAddedToCart = {
   id: uuid(),
   type: 'product-added-to-shopping-cart',
   data: {
-    productItem: redBalls,
+    productItem: RED_BALLS,
     shoppingCartId: SHOPPING_CART_ID,
   },
 };
@@ -50,7 +37,7 @@ export const greenBallsAdded: ProductAddedToCart = {
   id: uuid(),
   type: 'product-added-to-shopping-cart',
   data: {
-    productItem: greenBalls,
+    productItem: GREEN_BALLS,
     shoppingCartId: SHOPPING_CART_ID,
   },
 };
@@ -59,7 +46,7 @@ export const yellowBallAdded: ProductAddedToCart = {
   id: uuid(),
   type: 'product-added-to-shopping-cart',
   data: {
-    productItem: yellowBall,
+    productItem: YELLOW_BALL,
     shoppingCartId: SHOPPING_CART_ID,
   },
 };
@@ -68,7 +55,7 @@ export const greenBallsRemoved: ProductRemovedFromCart = {
   id: uuid(),
   type: 'product-removed-from-shopping-cart',
   data: {
-    productItem: greenBalls,
+    productItem: GREEN_BALLS,
     shoppingCartId: SHOPPING_CART_ID,
   },
 };

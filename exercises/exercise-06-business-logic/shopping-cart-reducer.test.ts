@@ -1,12 +1,15 @@
-import { CLIENT_ID, SHOPPING_CART_ID } from './constants';
+import {
+  CLIENT_ID,
+  RED_BALLS,
+  SHOPPING_CART_ID,
+  YELLOW_BALL,
+} from './constants';
 import {
   cartConfirmed,
   cartOpened,
   greenBallsAdded,
   greenBallsRemoved,
-  redBalls,
   redBallsAdded,
-  yellowBall,
   yellowBallAdded,
 } from './events';
 import { shoppingCartReducer } from './shopping-cart-reducer';
@@ -19,7 +22,7 @@ describe('Shopping cart reducer', () => {
       clientId: CLIENT_ID,
       confirmedAt: new Date('2023-08-07'),
       openedAt: new Date('2023-08-06'),
-      products: [redBalls, yellowBall],
+      products: [RED_BALLS, YELLOW_BALL],
       status: 'confirmed',
     };
 

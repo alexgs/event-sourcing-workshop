@@ -1,14 +1,17 @@
 import { EventStoreDBClient } from '@eventstore/db-client';
 import { appendToStream } from './append-to-stream';
-import { CLIENT_ID, SHOPPING_CART_ID } from './constants';
+import {
+  CLIENT_ID,
+  RED_BALLS,
+  SHOPPING_CART_ID,
+  YELLOW_BALL,
+} from './constants';
 import {
   cartConfirmed,
   cartOpened,
   greenBallsAdded,
   greenBallsRemoved,
-  redBalls,
   redBallsAdded,
-  yellowBall,
   yellowBallAdded,
 } from './events';
 import { getShoppingCart } from './get-shopping-cart';
@@ -46,7 +49,7 @@ describe('Function `getShoppingCart`', () => {
       clientId: CLIENT_ID,
       confirmedAt: new Date('2023-08-07'),
       openedAt: new Date('2023-08-06'),
-      products: [redBalls, yellowBall],
+      products: [RED_BALLS, YELLOW_BALL],
       status: 'confirmed',
     };
     expect(output).toEqual(expectedOutput);
