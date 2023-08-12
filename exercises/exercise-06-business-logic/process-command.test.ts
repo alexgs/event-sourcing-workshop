@@ -145,7 +145,7 @@ describe('Function `processCommand`', () => {
       id: SHOPPING_CART_ID,
       clientId: CLIENT_ID,
       openedAt: openTime,
-      products: [ RED_BALLS, YELLOW_BALL ],
+      products: [RED_BALLS, YELLOW_BALL],
       status: 'open',
     };
 
@@ -190,9 +190,73 @@ describe('Function `processCommand`', () => {
     expect(output).toMatchObject(expectedEvent);
   });
 
-  it.todo('throws an error when adding a product to a cart that isn\'t opened');
-  it.todo('throws an error when canceling a cart that isn\'t opened');
-  it.todo('throws an error when confirming a cart that isn\'t opened');
+  it("throws an error when adding a product to a cart that isn't opened", () => {
+    const now = new Date();
+    const cart: ShoppingCart = {
+      id: SHOPPING_CART_ID,
+      clientId: CLIENT_ID,
+      openedAt: now,
+      products: [],
+      status: 'confirmed',
+    };
+
+    expect(() =>
+      processCommand(cart, {
+        type: 'command.add-product-to-shopping-cart',
+        data: {
+          productItem: RED_BALLS,
+          shoppingCartId: SHOPPING_CART_ID,
+        },
+      }),
+    ).toThrowError();
+  });
+
+  it("throws an error when canceling a cart that isn't opened", () => {
+    const openTime = new Date('2023-08-06');
+    const cancelTime = new Date('2023-08-08');
+
+    const cart: ShoppingCart = {
+      id: SHOPPING_CART_ID,
+      clientId: CLIENT_ID,
+      openedAt: openTime,
+      products: [],
+      status: 'new',
+    };
+
+    expect(() =>
+      processCommand(cart, {
+        type: 'command.cancel-shopping-cart',
+        data: {
+          timestamp: cancelTime,
+          shoppingCartId: SHOPPING_CART_ID,
+        },
+      }),
+    ).toThrowError();
+  });
+
+  it("throws an error when confirming a cart that isn't opened", () => {
+    const openTime = new Date('2023-08-06');
+    const confirmationTime = new Date('2023-08-08');
+
+    const cart: ShoppingCart = {
+      id: SHOPPING_CART_ID,
+      clientId: CLIENT_ID,
+      openedAt: openTime,
+      products: [YELLOW_BALL, RED_BALLS],
+      status: 'canceled',
+    };
+
+    expect(() =>
+      processCommand(cart, {
+        type: 'command.confirm-shopping-cart',
+        data: {
+          timestamp: confirmationTime,
+          shoppingCartId: SHOPPING_CART_ID,
+        },
+      }),
+    ).toThrowError();
+  });
+
   it.todo('throws an error when confirming an empty cart');
   it.todo('throws an error when removing a product not in the cart');
 });
