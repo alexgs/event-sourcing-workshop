@@ -87,7 +87,7 @@ function processConfirmShoppingCart(
 }
 
 function processOpenShoppingCart(
-  _cart: ShoppingCart,
+  _cart: null,
   command: OpenShoppingCart,
 ): ShoppingCartOpened {
   return {
@@ -126,7 +126,7 @@ function processRemoveProductFromCart(
  * This is a pure function that simply processes commands into corresponding events
  */
 export function processCommand(
-  cart: ShoppingCart,
+  cart: ShoppingCart | null,
   command: ShoppingCartCommand,
 ): ShoppingCartEvent {
   switch (command.type) {
@@ -137,7 +137,8 @@ export function processCommand(
     case 'command.confirm-shopping-cart':
       return processConfirmShoppingCart(cart, command as ConfirmShoppingCart);
     case 'command.open-shopping-cart':
-      return processOpenShoppingCart(cart, command as OpenShoppingCart);
+      // TODO There could be better handling/checking/error-throwing for `cart` being `null` or an actual value
+      return processOpenShoppingCart(cart as null, command as OpenShoppingCart);
     case 'command.remove-product-from-cart':
       return processRemoveProductFromCart(
         cart,

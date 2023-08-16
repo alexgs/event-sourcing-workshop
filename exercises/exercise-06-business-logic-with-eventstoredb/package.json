@@ -2,6 +2,7 @@
   "name": "exercise-06-business-logic",
   "version": "1.0.0",
   "scripts": {
+    "check": "tsc --noEmit",
     "test": "jest",
     "test:watch": "jest --watch"
   },

@@ -1,5 +1,6 @@
 import { EventStoreDBClient } from '@eventstore/db-client';
 
+import { appendToStream } from './append-to-stream';
 import { SHOPPING_CART_ID } from './constants';
 import {
   cartConfirmed,
@@ -10,18 +11,19 @@ import {
   yellowBallAdded,
 } from './events';
 import { ShoppingCartEvent } from './types';
-import {appendToStream} from "./append-to-stream";
 
 describe('Function `appendToStream`', () => {
   let eventStore: EventStoreDBClient = null;
 
   beforeAll(async () => {
-    eventStore = EventStoreDBClient.connectionString('esdb://localhost:2113?tls=false');
+    eventStore = EventStoreDBClient.connectionString(
+      'esdb://localhost:2113?tls=false',
+    );
   });
 
   afterAll(async () => {
     await eventStore.dispose();
-  })
+  });
 
   it('appends events to EventStoreDB', async () => {
     const streamName = `shopping-cart-${SHOPPING_CART_ID}`;
@@ -33,8 +35,12 @@ describe('Function `appendToStream`', () => {
       greenBallsRemoved,
       cartConfirmed,
     ];
-    const appendedEventsCount = await appendToStream(eventStore, streamName, events);
+    const appendedEventsCount = await appendToStream(
+      eventStore,
+      streamName,
+      events,
+    );
 
-    expect(appendedEventsCount).toEqual(BigInt(events.length));
+    expect(appendedEventsCount).toEqual(events.length);
   });
 });
