@@ -9,6 +9,7 @@ import {
   AddProductToCart,
   ConfirmShoppingCart,
   OpenShoppingCart,
+  RemoveProductFromCart,
   ShoppingCart,
 } from './types';
 
@@ -92,5 +93,51 @@ describe('Function `commandProcessor`', () => {
     expect(actualCart).toEqual(expectedCart);
   });
 
-  it.todo('correctly handles violations of business logic rules');
+  describe('correctly handles violations of business logic rules:', () => {
+    it('The customer may add a product to the shopping cart only after opening it.', async () => {
+      const command: AddProductToCart = {
+        type: 'command.add-product-to-shopping-cart',
+        data: {
+          shoppingCartId: SHOPPING_CART_ID,
+          productItem: GREEN_BALLS,
+        },
+      };
+      await expect(
+        async () => await commandProcessor(eventStore, command),
+      ).rejects.toThrowError();
+    });
+
+    it('The customer may remove a product with a given price from the cart.', async () => {
+      const now = new Date();
+      const command1: OpenShoppingCart = {
+        type: 'command.open-shopping-cart',
+        data: {
+          shoppingCartId: SHOPPING_CART_ID,
+          clientId: uuid(),
+          timestamp: now,
+        },
+      };
+      const command2: AddProductToCart = {
+        type: 'command.add-product-to-shopping-cart',
+        data: {
+          shoppingCartId: SHOPPING_CART_ID,
+          productItem: RED_BALLS,
+        },
+      };
+      const command3: RemoveProductFromCart = {
+        type: 'command.remove-product-from-cart',
+        data: {
+          shoppingCartId: SHOPPING_CART_ID,
+          productItem: GREEN_BALLS,
+        },
+      };
+
+      const result1 = await commandProcessor(eventStore, command1);
+      const result2 = await commandProcessor(eventStore, command2);
+
+      await expect(
+        async () => await commandProcessor(eventStore, command3),
+      ).rejects.toThrowError();
+    });
+  });
 });

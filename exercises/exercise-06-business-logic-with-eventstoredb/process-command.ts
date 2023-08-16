@@ -25,10 +25,10 @@ function getUnitPrice(product: ProductItem): number {
 }
 
 function processAddProductToShoppingCart(
-  cart: ShoppingCart,
+  cart: ShoppingCart | null,
   command: AddProductToCart,
 ): ProductAddedToCart {
-  if (cart.status !== 'open') {
+  if (cart?.status !== 'open') {
     throw new Error('Cart must be opened before adding product(s).');
   }
 
@@ -48,10 +48,10 @@ function processAddProductToShoppingCart(
 }
 
 function processCancelShoppingCart(
-  cart: ShoppingCart,
+  cart: ShoppingCart | null,
   command: CancelShoppingCart,
 ): ShoppingCartCanceled {
-  if (cart.status !== 'open') {
+  if (cart?.status !== 'open') {
     throw new Error('Cart must be opened before canceling.');
   }
 
@@ -66,13 +66,13 @@ function processCancelShoppingCart(
 }
 
 function processConfirmShoppingCart(
-  cart: ShoppingCart,
+  cart: ShoppingCart | null,
   command: ConfirmShoppingCart,
 ): ShoppingCartConfirmed {
-  if (cart.status !== 'open') {
+  if (cart?.status !== 'open') {
     throw new Error('Cart must be opened before confirming.');
   }
-  if (cart.products.length < 1) {
+  if (cart?.products.length < 1) {
     throw new Error('Cart must contain product(s) before confirming.');
   }
 
@@ -102,13 +102,13 @@ function processOpenShoppingCart(
 }
 
 function processRemoveProductFromCart(
-  cart: ShoppingCart,
+  cart: ShoppingCart | null,
   command: RemoveProductFromCart,
 ): ProductRemovedFromCart {
-  if (cart.status !== 'open') {
+  if (cart?.status !== 'open') {
     throw new Error('Cart must be opened before removing products.');
   }
-  if (!cart.products.includes(command.data.productItem)) {
+  if (cart && !cart.products.includes(command.data.productItem)) {
     throw new Error('Cart must contain the product to be removed.');
   }
 

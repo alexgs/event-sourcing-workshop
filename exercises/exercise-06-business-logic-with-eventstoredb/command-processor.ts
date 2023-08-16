@@ -13,13 +13,10 @@ export async function commandProcessor(
   command: ShoppingCartCommand,
 ) {
   const streamName = getShoppingCartStreamName(command.data.shoppingCartId);
-  const cart: ShoppingCart | null = await getShoppingCart(eventStore, streamName);
-  try {
-    const event = processCommand(cart, command);
-    const result = await appendToStream(eventStore, streamName, [event]);
-    return result;
-  } catch (e) {
-    // throw e;
-    console.log(`Error processing command: ${e.message}`);
-  }
+  const cart: ShoppingCart | null = await getShoppingCart(
+    eventStore,
+    streamName,
+  );
+  const event = processCommand(cart, command);
+  return appendToStream(eventStore, streamName, [event]);
 }
