@@ -122,6 +122,9 @@ function processRemoveProductFromCart(
   };
 }
 
+/**
+ * This is a pure function that simply processes commands into corresponding events
+ */
 export function processCommand(
   cart: ShoppingCart,
   command: ShoppingCartCommand,
