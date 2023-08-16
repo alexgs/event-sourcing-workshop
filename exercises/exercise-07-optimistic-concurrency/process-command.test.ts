@@ -21,6 +21,7 @@ describe('Function `processCommand`', () => {
     const cart: ShoppingCart = {
       id: SHOPPING_CART_ID,
       clientId: CLIENT_ID,
+      expectedRevision: BigInt(0),
       openedAt: now,
       products: [],
       status: 'open',
@@ -58,6 +59,7 @@ describe('Function `processCommand`', () => {
     const cart: ShoppingCart = {
       id: SHOPPING_CART_ID,
       clientId: CLIENT_ID,
+      expectedRevision: BigInt(0),
       openedAt: openTime,
       products: [],
       status: 'open',
@@ -87,6 +89,7 @@ describe('Function `processCommand`', () => {
     const cart: ShoppingCart = {
       id: SHOPPING_CART_ID,
       clientId: CLIENT_ID,
+      expectedRevision: BigInt(2),
       openedAt: openTime,
       products: [YELLOW_BALL, RED_BALLS],
       status: 'open',
@@ -116,6 +119,7 @@ describe('Function `processCommand`', () => {
     const cart: ShoppingCart = {
       id: SHOPPING_CART_ID,
       clientId: CLIENT_ID,
+      expectedRevision: BigInt(0),
       openedAt: openTime,
       products: [],
       status: 'open',
@@ -145,6 +149,7 @@ describe('Function `processCommand`', () => {
     const cart: ShoppingCart = {
       id: SHOPPING_CART_ID,
       clientId: CLIENT_ID,
+      expectedRevision: BigInt(2),
       openedAt: openTime,
       products: [RED_BALLS, YELLOW_BALL],
       status: 'open',
@@ -165,6 +170,7 @@ describe('Function `processCommand`', () => {
     const cart: ShoppingCart = {
       id: SHOPPING_CART_ID,
       clientId: CLIENT_ID,
+      expectedRevision: BigInt(0),
       openedAt: now,
       products: [],
       status: 'open',
@@ -196,6 +202,7 @@ describe('Function `processCommand`', () => {
     const cart: ShoppingCart = {
       id: SHOPPING_CART_ID,
       clientId: CLIENT_ID,
+      expectedRevision: BigInt(0),
       openedAt: now,
       products: [],
       status: 'confirmed',
@@ -219,6 +226,7 @@ describe('Function `processCommand`', () => {
     const cart: ShoppingCart = {
       id: SHOPPING_CART_ID,
       clientId: CLIENT_ID,
+      expectedRevision: BigInt(0),
       openedAt: openTime,
       products: [],
       status: 'new',
@@ -242,6 +250,7 @@ describe('Function `processCommand`', () => {
     const cart: ShoppingCart = {
       id: SHOPPING_CART_ID,
       clientId: CLIENT_ID,
+      expectedRevision: BigInt(0),
       openedAt: openTime,
       products: [YELLOW_BALL, RED_BALLS],
       status: 'canceled',
@@ -265,6 +274,7 @@ describe('Function `processCommand`', () => {
     const cart: ShoppingCart = {
       id: SHOPPING_CART_ID,
       clientId: CLIENT_ID,
+      expectedRevision: BigInt(0),
       openedAt: openTime,
       products: [],
       status: 'open',
@@ -287,6 +297,7 @@ describe('Function `processCommand`', () => {
     const cart: ShoppingCart = {
       id: SHOPPING_CART_ID,
       clientId: CLIENT_ID,
+      expectedRevision: BigInt(2),
       openedAt: openTime,
       products: [RED_BALLS, YELLOW_BALL],
       status: 'open',

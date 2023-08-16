@@ -5,11 +5,12 @@ export async function appendToStream(
   eventStore: EventStoreDBClient,
   streamName: string,
   events: ShoppingCartEvent[],
+  expectedRevision: bigint
 ): Promise<number> {
   const serializedEvents = events.map(jsonEvent);
 
   await eventStore.appendToStream(streamName, serializedEvents, {
-    expectedRevision: ANY,
+    expectedRevision,
   });
 
   return events.length;

@@ -14,6 +14,7 @@ export interface ShoppingCart {
   canceledAt?: Date;
   clientId: string;
   confirmedAt?: Date;
+  expectedRevision: bigint;
   openedAt: Date;
   products: PricedProductItem[];
   status: ShoppingCartStatus;

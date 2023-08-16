@@ -39,6 +39,7 @@ describe('Function `appendToStream`', () => {
       eventStore,
       streamName,
       events,
+      BigInt(5),
     );
 
     expect(appendedEventsCount).toEqual(events.length);

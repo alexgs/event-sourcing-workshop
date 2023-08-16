@@ -87,6 +87,7 @@ describe('Function `commandProcessor`', () => {
       status: 'confirmed',
       products: [RED_BALLS, GREEN_BALLS],
       clientId: command1.data.clientId,
+      expectedRevision: BigInt(4),
       openedAt: now,
       confirmedAt: addSeconds(now, 13),
     };
