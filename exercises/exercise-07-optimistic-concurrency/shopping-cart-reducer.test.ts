@@ -21,7 +21,7 @@ describe('Shopping cart reducer', () => {
       id: SHOPPING_CART_ID,
       clientId: CLIENT_ID,
       confirmedAt: new Date('2023-08-07'),
-      expectedRevision: BigInt(2),
+      expectedRevision: 5,
       openedAt: new Date('2023-08-06'),
       products: [RED_BALLS, YELLOW_BALL],
       status: 'confirmed',

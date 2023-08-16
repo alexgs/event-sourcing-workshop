@@ -17,7 +17,7 @@ function processCartCanceled(
     return {
       ...cart,
       canceledAt: event.data.canceledAt,
-      expectedRevision: cart.expectedRevision + BigInt(1),
+      expectedRevision: cart.expectedRevision + 1,
       status: 'canceled',
     };
   }
@@ -32,7 +32,7 @@ function processCartConfirmed(
     return {
       ...cart,
       confirmedAt: event.data.confirmedAt,
-      expectedRevision: cart.expectedRevision + BigInt(1),
+      expectedRevision: cart.expectedRevision + 1,
       status: 'confirmed',
     };
   }
@@ -43,7 +43,7 @@ function processCartOpened(event: ShoppingCartOpened): ShoppingCart {
   return {
     id: event.data.shoppingCartId,
     clientId: event.data.clientId,
-    expectedRevision: BigInt(0),
+    expectedRevision: 0,
     openedAt: event.data.openedAt,
     products: [],
     status: 'open',
@@ -57,7 +57,7 @@ function processProductAdded(
   if (cart.id === event.data.shoppingCartId && cart.status === 'open') {
     return {
       ...cart,
-      expectedRevision: cart.expectedRevision + BigInt(1),
+      expectedRevision: cart.expectedRevision + 1,
       products: [...cart.products, event.data.productItem],
     };
   }
@@ -75,7 +75,7 @@ function processProductRemoved(
 
     return {
       ...cart,
-      expectedRevision: cart.expectedRevision + BigInt(1),
+      expectedRevision: cart.expectedRevision + 1,
       products,
     };
   }
