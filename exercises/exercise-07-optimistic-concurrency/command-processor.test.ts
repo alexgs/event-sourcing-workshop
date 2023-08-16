@@ -1,7 +1,7 @@
 import { EventStoreDBClient } from '@eventstore/db-client';
 import { addSeconds } from 'date-fns';
 import { v4 as uuid } from 'uuid';
-import { GREEN_BALLS, RED_BALLS, SHOPPING_CART_ID } from './constants';
+import { GREEN_BALLS, RED_BALLS } from './constants';
 import { commandProcessor } from './command-processor';
 import { getShoppingCart } from './get-shopping-cart';
 import { getShoppingCartStreamName } from './get-shopping-cart-stream-name';
@@ -28,10 +28,11 @@ describe('Function `commandProcessor`', () => {
 
   it('handles a single open command', async () => {
     const now = new Date();
+    const shoppingCartId = uuid();
     const command: OpenShoppingCart = {
       type: 'command.open-shopping-cart',
       data: {
-        shoppingCartId: SHOPPING_CART_ID,
+        shoppingCartId,
         clientId: uuid(),
         timestamp: now,
       },
@@ -43,10 +44,11 @@ describe('Function `commandProcessor`', () => {
 
   it('handles a (happy path) series of commands', async () => {
     const now = new Date();
+    const shoppingCartId = uuid();
     const command1: OpenShoppingCart = {
       type: 'command.open-shopping-cart',
       data: {
-        shoppingCartId: SHOPPING_CART_ID,
+        shoppingCartId,
         clientId: uuid(),
         timestamp: now,
       },
@@ -54,21 +56,21 @@ describe('Function `commandProcessor`', () => {
     const command2: AddProductToCart = {
       type: 'command.add-product-to-shopping-cart',
       data: {
-        shoppingCartId: SHOPPING_CART_ID,
+        shoppingCartId,
         productItem: RED_BALLS,
       },
     };
     const command3: AddProductToCart = {
       type: 'command.add-product-to-shopping-cart',
       data: {
-        shoppingCartId: SHOPPING_CART_ID,
+        shoppingCartId,
         productItem: GREEN_BALLS,
       },
     };
     const command4: ConfirmShoppingCart = {
       type: 'command.confirm-shopping-cart',
       data: {
-        shoppingCartId: SHOPPING_CART_ID,
+        shoppingCartId,
         timestamp: addSeconds(now, 13),
       },
     };
@@ -80,14 +82,14 @@ describe('Function `commandProcessor`', () => {
 
     const actualCart = await getShoppingCart(
       eventStore,
-      getShoppingCartStreamName(SHOPPING_CART_ID),
+      getShoppingCartStreamName(shoppingCartId),
     );
     const expectedCart: ShoppingCart = {
-      id: SHOPPING_CART_ID,
+      id: shoppingCartId,
       status: 'confirmed',
       products: [RED_BALLS, GREEN_BALLS],
       clientId: command1.data.clientId,
-      expectedRevision: BigInt(4),
+      expectedRevision: 3,
       openedAt: now,
       confirmedAt: addSeconds(now, 13),
     };
@@ -96,10 +98,11 @@ describe('Function `commandProcessor`', () => {
 
   describe('correctly handles violations of business logic rules:', () => {
     it('The customer may add a product to the shopping cart only after opening it.', async () => {
+      const shoppingCartId = uuid();
       const command: AddProductToCart = {
         type: 'command.add-product-to-shopping-cart',
         data: {
-          shoppingCartId: SHOPPING_CART_ID,
+          shoppingCartId,
           productItem: GREEN_BALLS,
         },
       };
@@ -110,10 +113,11 @@ describe('Function `commandProcessor`', () => {
 
     it('The customer may remove a product with a given price from the cart.', async () => {
       const now = new Date();
+      const shoppingCartId = uuid();
       const command1: OpenShoppingCart = {
         type: 'command.open-shopping-cart',
         data: {
-          shoppingCartId: SHOPPING_CART_ID,
+          shoppingCartId,
           clientId: uuid(),
           timestamp: now,
         },
@@ -121,14 +125,14 @@ describe('Function `commandProcessor`', () => {
       const command2: AddProductToCart = {
         type: 'command.add-product-to-shopping-cart',
         data: {
-          shoppingCartId: SHOPPING_CART_ID,
+          shoppingCartId,
           productItem: RED_BALLS,
         },
       };
       const command3: RemoveProductFromCart = {
         type: 'command.remove-product-from-cart',
         data: {
-          shoppingCartId: SHOPPING_CART_ID,
+          shoppingCartId,
           productItem: GREEN_BALLS,
         },
       };

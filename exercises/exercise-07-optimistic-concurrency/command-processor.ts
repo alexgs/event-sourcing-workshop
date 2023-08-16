@@ -18,5 +18,5 @@ export async function commandProcessor(
     streamName,
   );
   const event = processCommand(cart, command);
-  return appendToStream(eventStore, streamName, [event], cart.expectedRevision);
+  return appendToStream(eventStore, streamName, [event], cart?.expectedRevision);
 }

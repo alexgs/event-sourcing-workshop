@@ -8,7 +8,7 @@ export async function appendToStream(
   expectedRevision: number | null
 ): Promise<number> {
   const serializedEvents = events.map(jsonEvent);
-  const revision = expectedRevision ? BigInt(expectedRevision) : NO_STREAM;
+  const revision = typeof expectedRevision === 'number' ? BigInt(expectedRevision) : NO_STREAM;
 
   await eventStore.appendToStream(streamName, serializedEvents, {
     expectedRevision: revision,
