@@ -135,7 +135,7 @@ describe('Getting state from events', () => {
 
     // ********************************
     //    IMPLEMENTATION GOES HERE!!
-    eventStore.subscribe(detailViewHandler);
+    eventStore.subscribe(detailViewHandler(shoppingCarts));
     eventStore.subscribe(pendingCartInfoHandler);
     // ********************************
 
