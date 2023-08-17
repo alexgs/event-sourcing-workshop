@@ -1,4 +1,6 @@
 import { v4 as uuid } from 'uuid';
+import { detailViewHandler } from './detail-view-handler';
+import { pendingCartInfoHandler } from './pending-cart-info';
 import { getDatabase } from './tools/database';
 import { getEventStore } from './tools/eventStore';
 
@@ -13,41 +15,41 @@ export type PricedProductItem = ProductItem & {
 
 export type ShoppingCartEvent =
   | {
-  type: 'ShoppingCartOpened';
-  data: {
-    shoppingCartId: string;
-    clientId: string;
-    openedAt: string;
-  };
-}
+      type: 'ShoppingCartOpened';
+      data: {
+        shoppingCartId: string;
+        clientId: string;
+        openedAt: string;
+      };
+    }
   | {
-  type: 'ProductItemAddedToShoppingCart';
-  data: {
-    shoppingCartId: string;
-    productItem: PricedProductItem;
-  };
-}
+      type: 'ProductItemAddedToShoppingCart';
+      data: {
+        shoppingCartId: string;
+        productItem: PricedProductItem;
+      };
+    }
   | {
-  type: 'ProductItemRemovedFromShoppingCart';
-  data: {
-    shoppingCartId: string;
-    productItem: PricedProductItem;
-  };
-}
+      type: 'ProductItemRemovedFromShoppingCart';
+      data: {
+        shoppingCartId: string;
+        productItem: PricedProductItem;
+      };
+    }
   | {
-  type: 'ShoppingCartConfirmed';
-  data: {
-    shoppingCartId: string;
-    confirmedAt: string;
-  };
-}
+      type: 'ShoppingCartConfirmed';
+      data: {
+        shoppingCartId: string;
+        confirmedAt: string;
+      };
+    }
   | {
-  type: 'ShoppingCartCanceled';
-  data: {
-    shoppingCartId: string;
-    canceledAt: string;
-  };
-};
+      type: 'ShoppingCartCanceled';
+      data: {
+        shoppingCartId: string;
+        canceledAt: string;
+      };
+    };
 
 export enum ShoppingCartStatus {
   Pending = 'Pending',
@@ -131,9 +133,11 @@ describe('Getting state from events', () => {
     const shoppingCartInfos =
       database.collection<ShoppingCartShortInfo>('shoppingCartInfos');
 
-    // TODO:
-    // 1. Register here your event handlers using `eventStore.subscribe`.
-    // 2. Store results in database.
+    // ********************************
+    //    IMPLEMENTATION GOES HERE!!
+    eventStore.subscribe(detailViewHandler);
+    eventStore.subscribe(pendingCartInfoHandler);
+    // ********************************
 
     // first confirmed
     eventStore.appendToStream<ShoppingCartEvent>(
@@ -173,7 +177,7 @@ describe('Getting state from events', () => {
           shoppingCartId,
           confirmedAt,
         },
-      }
+      },
     );
 
     // cancelled
@@ -200,7 +204,7 @@ describe('Getting state from events', () => {
           shoppingCartId: cancelledShoppingCartId,
           canceledAt,
         },
-      }
+      },
     );
 
     // confirmed but other client
@@ -227,7 +231,7 @@ describe('Getting state from events', () => {
           shoppingCartId: otherClientShoppingCartId,
           confirmedAt,
         },
-      }
+      },
     );
 
     // second confirmed
@@ -254,7 +258,7 @@ describe('Getting state from events', () => {
           shoppingCartId: otherConfirmedShoppingCartId,
           confirmedAt,
         },
-      }
+      },
     );
 
     // first pending
